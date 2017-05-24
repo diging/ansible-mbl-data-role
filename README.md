@@ -1,7 +1,6 @@
 # Ansible role for Black Goat on RHEL/CentOS 7
 
-Deploys the Black Goat webapp on a RHEL/CentOS 7 server via Gunicorn
-behind NginX.
+Deploys the [MBL course and investigator data platform](https://github.com/erickpeirson/mbl-browser) on a RHEL/CentOS 7 server via Gunicorn behind NginX.
 
 ## Requires
 
