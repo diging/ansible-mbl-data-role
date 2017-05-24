@@ -1,0 +1,18 @@
+- name: create app virtualenv with Python2.7.11
+  command: virtualenv --python=/opt/bin/python2.7 /var/opt/wsgi/mbl-data/env
+  args:
+    creates: /var/opt/wsgi/mbl-data/env
+  become: yes
+  become_user: mbl-data
+- name: install python dependencies for app
+  pip:
+    requirements: /var/opt/wsgi/mbl-data/mbl-data/requirements.txt
+    virtualenv: /var/opt/wsgi/mbl-data/env
+  become: yes
+  become_user: mbl-data
+- name: make sure that gunicorn is installed in the app virtualenv
+  pip:
+    name: gunicorn
+    virtualenv: /var/opt/wsgi/mbl-data/env
+  become: yes
+  become_user: mbl-data

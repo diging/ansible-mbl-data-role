@@ -1,0 +1,16 @@
+- name: include variables
+  include_vars: vault_env_secrets.yml
+
+- include: create_users_and_paths.yml
+
+- include: retrieve_source_from_github.yml
+
+- include: install_app_dependencies_in_virtualenv.yml
+
+- include: provision_postgresql_user_and_db.yml
+
+- include: initialize_app_db_and_static_files.yml
+
+- include: configure_gunicorn_and_supervisor.yml
+
+- include: configure_nginx.yml

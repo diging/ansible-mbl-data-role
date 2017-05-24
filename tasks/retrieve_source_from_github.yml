@@ -1,0 +1,25 @@
+- name: make sure git is installed
+  yum:
+    name: git
+    state: present
+  become: yes
+- name: make sure virtualenv is installed
+  pip:
+    name: virtualenv
+    state: present
+  become: yes
+- name: create git repo target
+  file:
+    path: /var/opt/wsgi/mbl-data/mbl-data
+    state: directory
+    owner: mbl-data
+    mode: "u=rwx,g=r,o=r"
+    group: webapps
+  become: yes
+- name: get code from github
+  git:
+    repo: git://github.com/erickpeirson/mbl-browser.git
+    dest: /var/opt/wsgi/mbl-data/mbl-data
+    force: yes
+  become: yes
+  become_user: mbl-data

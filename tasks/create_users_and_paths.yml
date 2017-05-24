@@ -1,0 +1,37 @@
+- name: create mbl-data user
+  user:
+    name: mbl-data
+    groups: webapps
+    state: present
+  become: yes
+- name: create project directory
+  file:
+    path: /var/opt/wsgi/mbl-data
+    state: directory
+    owner: mbl-data
+    group: webapps
+  become: yes
+- name: create app subdirectories
+  file:
+    path: /var/opt/wsgi/mbl-data/{{ item }}
+    state: directory
+    mode: "u=rwx,g=rwx,o=rx"
+    owner: mbl-data
+    group: webapps
+  become: yes
+  with_items:
+    - run
+    - bin
+    - logs
+    - static
+- name: allow nginx to read/write
+  command: chcon -Rt httpd_sys_content_t /var/opt/wsgi/mbl-data
+  become: yes
+- name: write secret environment variables
+  template:
+    src: env_secrets.j2
+    dest: /var/opt/wsgi/mbl-data/env_secrets
+    owner: mbl-data
+    group: webapps
+    mode: "u=rwx,g=,o="
+  become: yes

@@ -1,0 +1,17 @@
+- name: make sure psycopg2 is installed for the system Python
+  pip:
+    name: psycopg2
+    state: present
+  become: yes
+- name: provision postgres user
+  postgresql_user:
+    name: "{{ database_user }}"
+    password: "{{ database_password }}"
+  become: yes
+  become_user: postgres
+- name: provision postgres database
+  postgresql_db:
+    name: mbl
+    owner: "{{ database_user }}"
+  become: yes
+  become_user: postgres

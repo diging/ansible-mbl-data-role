@@ -1,0 +1,15 @@
+- name: copy locations config for nginx
+  copy:
+    src: files/mbl_locations.conf
+    dest: /etc/nginx/conf.d/mbl_locations.conf
+  become: yes
+- name: copy upstream config for nginx
+  copy:
+    src: files/mbl_upstream.conf
+    dest: /etc/nginx/conf.d/mbl_upstream.conf
+  become: yes
+- name: restart nginx
+  systemd:
+    state: restarted
+    name: nginx
+  become: yes

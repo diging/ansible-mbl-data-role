@@ -1,0 +1,31 @@
+- name: create gunicorn log file
+  file:
+    path: /var/opt/wsgi/mbl-data/logs/gunicorn_supervisor.log
+    state: touch
+    mode: "u=rw,g=rw,o=r"
+    owner: mbl-data
+    group: webapps
+  become: yes
+- name: copy gunicorn start script
+  copy:
+    src: files/gunicorn_start
+    dest: /var/opt/wsgi/mbl-data/bin/gunicorn_start
+    mode: "u=rwx,g=rx,o=rx"
+    owner: mbl-data
+    group: webapps
+  become: yes
+- name: copy supervisord configuration for mbl
+  copy:
+    src: files/supervisord__mbl.conf
+    dest: /etc/supervisord.d/mbl.conf
+    mode: "u=rw,g=r,o=r"
+  become: yes
+- name: reread supervisor configuration
+  command: supervisorctl reread
+  become: yes
+- name: update supervisor with new configuration
+  command: supervisorctl update
+  become: yes
+- name: restart mbl-data gunicorn process
+  command: supervisorctl restart mbl-data
+  become: yes
