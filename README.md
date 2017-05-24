@@ -1,4 +1,4 @@
-# Ansible role for Black Goat on RHEL/CentOS 7
+# Ansible role for MBL course data platform on RHEL/CentOS 7
 
 Deploys the [MBL course and investigator data platform](https://github.com/erickpeirson/mbl-browser) on a RHEL/CentOS 7 server via Gunicorn behind NginX.
 
